@@ -1,16 +1,12 @@
-from sportsreference.ncaaf.teams import Teams
-from sportsreference.ncaaf.boxscore import Boxscore
-from sportsreference.ncaaf.schedule import Schedule
-import pandas as pd
+from sportsreference.mlb.roster import Roster, Player
 
-pd.set_option('display.max_columns', None)
-pd.set_option('display.width', None)
+summary_list = []
 
-purdue_schedule = Schedule('PURDUE')
-for game in purdue_schedule:
-    # print(game.date)  # Prints the date the game was played
-    # print(game.result)  # Prints whether the team won or lost
-    # Creates an instance of the Boxscore class for the game.
-    if game.opponent_abbr == 'iowa':
-      frame = pd.DataFrame(game.dataframe)
-      print(frame)
+for x in range(1990, 1995):
+    season = str(x)
+    braves = Roster('ATL', season)
+    pitchers = [player for player in braves.players if player.position == 'P']
+    for pitcher in pitchers:
+        summary_list.append((pitcher.name, season, pitcher.position, pitcher(season).games, pitcher(season).era, pitcher(season).wins, pitcher(season).whip))
+    
+print(summary_list)
